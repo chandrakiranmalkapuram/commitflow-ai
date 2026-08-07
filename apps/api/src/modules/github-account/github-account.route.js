@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.githubAccountRouter = void 0;
+const express_1 = require("express");
+const github_account_controller_js_1 = require("./github-account.controller.js");
+const auth_middleware_js_1 = require("../auth/auth.middleware.js");
+const router = (0, express_1.Router)();
+router.use(auth_middleware_js_1.authenticateJWT);
+router.post('/connect', github_account_controller_js_1.githubAccountController.connect);
+router.get('/me', github_account_controller_js_1.githubAccountController.getMyAccount);
+router.get('/callback', github_account_controller_js_1.githubAccountController.handleCallback);
+exports.githubAccountRouter = router;
