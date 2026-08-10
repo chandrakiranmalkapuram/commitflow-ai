@@ -1,25 +1,30 @@
-name: CommitFlow CI
+name: CommitFlow AI Trigger
 
 on:
   push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+    branches:
+      - "**"
 
 jobs:
-  build:
+  analyze:
+    name: Send Commit To CommitFlow
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - name: Install pnpm
-        uses: pnpm/action-setup@v3
+      - name: Checkout Repository
+        uses: actions/checkout@v4
         with:
-          version: 9
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: 'pnpm'
-      - run: pnpm install
-      - run: pnpm build
-      - run: pnpm lint
+          fetch-depth: 2
+
+      - name: Send Commit Data
+        run: |
+          curl -X POST "${{ secrets.COMMITFLOW_API_URL }}/webhook/github" \
+            -H "Content-Type: application/json" \
+            -H "x-commitflow-secret: ${{ secrets.COMMITFLOW_WEBHOOK_SECRET }}" \
+            -d '{
+              "repository": "${{ github.repository }}",
+              "branch": "${{ github.ref }}",
+              "commit": "${{ github.sha }}",
+              "author": "${{ github.actor }}",
+              "message": "${{ github.event.head_commit.message }}"
+            }'

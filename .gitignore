@@ -11,7 +11,10 @@ coverage
 .vscode
 
 *.log
-apps/api/keys/github-private-key.pem
-.env
+
 # GitHub App private key
+apps/api/github-private-key.pem
+apps/api/keys/github-private-key.pem
+
+# GitHub App private keys
 *.pem

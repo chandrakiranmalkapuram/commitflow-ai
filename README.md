@@ -1,15 +1,27 @@
-# commitflow-ai
+# CommitFlow AI
 
-This is a monorepo setup using Turborepo and PNPM.
+AI-powered developer content automation platform.
 
-## Getting Started
+CommitFlow AI converts GitHub development activity into professional developer content.
 
-1. Install dependencies:
+## Current Goal
+
+GitHub Push → AI Analysis → LinkedIn Content → Image Generation → Publishing
+
+## Tech Stack
+
+- Node.js
+- TypeScript
+- Express
+- React
+- PostgreSQL
+- Redis
+- BullMQ
+- AI Providers
+
+## Development
+
+Install dependencies:
+
 ```bash
 pnpm install
-```
-
-2. Run development server:
-```bash
-pnpm dev
-```
