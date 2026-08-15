@@ -1,4 +1,4 @@
-import { prismaService } from '../../db/prisma.service.js';
+import { prismaService } from '../db/prisma.service.js';
 import { ConnectPlatformDto } from './publishing.types.js';
 
 export class PublishingRepository {

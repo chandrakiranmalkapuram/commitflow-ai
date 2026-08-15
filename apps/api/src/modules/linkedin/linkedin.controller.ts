@@ -9,7 +9,7 @@ const LINKEDIN_REDIRECT_URI = process.env.LINKEDIN_REDIRECT_URI!;
 export class LinkedinController {
   async connect(req: Request, res: Response) {
     const scope = encodeURIComponent('openid profile w_member_social');
-    const state = req.user?.id || 'state'; // Pass userId in state if possible, though it's better to store it securely. We'll use a simple approach here.
+    const state = req.user?.userId || 'state'; // Pass userId in state if possible, though it's better to store it securely. We'll use a simple approach here.
     
     // Create authorization URL
     const authUrl = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${LINKEDIN_CLIENT_ID}&redirect_uri=${LINKEDIN_REDIRECT_URI}&state=${state}&scope=${scope}`;
@@ -84,7 +84,7 @@ export class LinkedinController {
 
   async getStatus(req: Request, res: Response) {
     try {
-      const userId = req.user?.id;
+      const userId = req.user?.userId;
       if (!userId) {
         return res.status(401).json({ error: 'Unauthorized' });
       }

@@ -7,7 +7,7 @@ export class PublishingController {
   async publishContent(req: Request, res: Response) {
     try {
       const { contentId } = req.params;
-      const userId = req.user?.id;
+      const userId = req.user?.userId;
 
       if (!userId) {
         return res.status(401).json({ error: 'Unauthorized' });

@@ -1,6 +1,15 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
+declare global {
+  namespace Express {
+    interface Request {
+      user?: { userId: string };
+    }
+  }
+}
+
+// Kept for backward compatibility if any files still use it explicitly
 export interface AuthenticatedRequest extends Request {
   user?: { userId: string };
 }
