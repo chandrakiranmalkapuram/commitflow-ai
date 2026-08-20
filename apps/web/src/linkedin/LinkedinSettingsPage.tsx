@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { linkedinApi } from './linkedin.api';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
-import { Linkedin, CheckCircle2, XCircle, Loader2 } from 'lucide-react';
+import { Link, CheckCircle2, XCircle, Loader2 } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
 
 export function LinkedinSettingsPage() {
@@ -53,7 +53,7 @@ export function LinkedinSettingsPage() {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Linkedin className="h-5 w-5 text-blue-600" />
+            <Link className="h-5 w-5 text-blue-600" />
             LinkedIn Account
           </CardTitle>
           <CardDescription>

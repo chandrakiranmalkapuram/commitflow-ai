@@ -5,6 +5,7 @@ export interface UserDto {
   status: string;
   createdAt: Date;
   updatedAt: Date;
+  organizationId?: string;
 }
 
 export interface CreateUserDto {

@@ -1,5 +1,5 @@
 import { Worker, Job } from 'bullmq';
-import { QUEUE_NAME, redisConnection } from './queue.service.js';
+import { QUEUE_NAME, redisConnection, queueService } from './queue.service.js';
 import { githubService } from '../github/github.service.js';
 import { mapGithubPushEvent } from '../github/github.mapper.js';
 import { GithubPushPayload } from '../github/github.types.js';
@@ -112,7 +112,22 @@ export class QueueWorker {
       await generationRepository.updateGenerationStatus(generation.id, 'COMPLETED');
       console.log(`[Worker] Generation ${generation.id} completed successfully`);
 
-      // TODO: Enqueue Publisher Job here
+      // Enqueue Publisher Job
+      const organization = await prismaService.client.organization.findUnique({
+        where: { id: registeredRepo.organizationId },
+        select: { ownerId: true }
+      });
+
+      if (organization) {
+        const publication = await publishingRepository.createPublication(linkedinContent.id, 'LINKEDIN');
+        await queueService.enqueuePublishJob({
+          publicationId: publication.id,
+          userId: organization.ownerId
+        });
+        console.log(`[Worker] Enqueued publish job for publication ${publication.id}`);
+      } else {
+        console.warn(`[Worker] Could not find organization owner to enqueue publish job`);
+      }
 
     } catch (error) {
       await generationRepository.updateGenerationStatus(generation.id, 'FAILED');

@@ -31,7 +31,7 @@ export class RepositoryController {
 
   async toggleActive(req: AuthenticatedRequest, res: Response): Promise<void> {
     try {
-      const id = req.params.id;
+      const id = req.params.id as string;
       const { active } = req.body;
       
       if (typeof active !== 'boolean') {

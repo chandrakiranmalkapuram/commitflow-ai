@@ -6,7 +6,7 @@ import { prismaService } from '../db/prisma.service.js';
 export class PublishingController {
   async publishContent(req: Request, res: Response) {
     try {
-      const { contentId } = req.params;
+      const contentId = req.params.contentId as string;
       const userId = req.user?.userId;
 
       if (!userId) {

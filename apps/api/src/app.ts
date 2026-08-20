@@ -18,11 +18,7 @@ export function createApp() {
 
   app.use(helmet());
   app.use(cors());
-  app.use(
-    express.raw({
-      type: 'application/json',
-    }),
-  );
+
   app.use(pinoHttp());
 
 
@@ -35,6 +31,7 @@ export function createApp() {
 
   app.use(
     '/webhook',
+    express.raw({ type: 'application/json' }),
     webhookRoute,
   );
 

@@ -26,7 +26,7 @@ export class AuthService {
 
     // 2. Create personal Organization if name not provided, otherwise use provided name
     const orgName = data.organizationName || `${data.name}'s Workspace`;
-    await organizationService.createOrganization({
+    const org = await organizationService.createOrganization({
       name: orgName,
       ownerId: user.id,
     });
@@ -35,7 +35,10 @@ export class AuthService {
     const tokens = this.generateTokens(user.id);
     
     return {
-      user: userService.mapToDto(user),
+      user: {
+        ...userService.mapToDto(user),
+        organizationId: org.id
+      },
       tokens,
     };
   }
@@ -53,8 +56,15 @@ export class AuthService {
 
     const tokens = this.generateTokens(user.id);
 
+    // Fetch primary organization for user
+    const organizations = await organizationService.getUserOrganizations(user.id);
+    const primaryOrg = organizations[0];
+
     return {
-      user: userService.mapToDto(user),
+      user: {
+        ...userService.mapToDto(user),
+        organizationId: primaryOrg?.id
+      },
       tokens,
     };
   }

@@ -1,5 +1,5 @@
 import { api } from '../services/api';
-import { LinkedinStatus } from './linkedin.types';
+import type { LinkedinStatus } from './linkedin.types';
 
 export const linkedinApi = {
   getStatus: async (): Promise<LinkedinStatus> => {
