@@ -1,4 +1,5 @@
-import 'dotenv/config';
+import { env } from './config/env.js';
+
 
 import { createApp } from './app.js';
 import { queueWorker } from './modules/queue/queue.worker.js';
