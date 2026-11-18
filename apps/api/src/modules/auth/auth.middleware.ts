@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
+import { env } from '../../config/env.js';
+
 
 declare global {
   namespace Express {
@@ -16,10 +17,16 @@ export interface AuthenticatedRequest extends Request {
 
 export const authenticateJWT = (req: AuthenticatedRequest, res: Response, next: NextFunction): void => {
   const authHeader = req.headers.authorization;
+  let token: string | undefined;
 
   if (authHeader && authHeader.startsWith('Bearer ')) {
-    const token = authHeader.split(' ')[1];
-    const secret = process.env.JWT_SECRET || 'fallback_secret_do_not_use_in_prod';
+    token = authHeader.split(' ')[1];
+  } else if (typeof req.query.token === 'string') {
+    token = req.query.token;
+  }
+
+  if (token) {
+    const secret = env.JWT_SECRET;
 
     try {
       const decoded = jwt.verify(token, secret) as { userId: string };

@@ -1,4 +1,5 @@
-import bcrypt from 'bcryptjs';
+import { env } from '../../config/env.js';
+
 import jwt from 'jsonwebtoken';
 import { RegisterRequest, LoginRequest, AuthTokens } from './auth.types.js';
 import { userService } from '../user/user.service.js';
@@ -7,11 +8,11 @@ import { UserDto } from '../user/user.types.js';
 
 export class AuthService {
   private get jwtSecret() {
-    return process.env.JWT_SECRET || 'fallback_secret_do_not_use_in_prod';
+    return env.JWT_SECRET;
   }
 
   private get jwtRefreshSecret() {
-    return process.env.JWT_REFRESH_SECRET || 'fallback_refresh_secret_do_not_use_in_prod';
+    return env.JWT_REFRESH_SECRET;
   }
 
   async register(data: RegisterRequest): Promise<{ user: UserDto; tokens: AuthTokens }> {

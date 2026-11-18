@@ -15,16 +15,8 @@ export function LinkedinSettingsPage() {
   });
 
   const handleConnect = () => {
-    // In a real app we'd attach auth token to the request or use a cookie
-    // Since this is a simple implementation, we'll redirect and rely on the backend session
-    // Or, better, if backend /connect is protected, we must pass the token. 
-    // Here we'll just redirect to the API endpoint which will redirect to LinkedIn.
-    const token = localStorage.getItem('token');
-    window.location.href = `${linkedinApi.connectUrl}?token=${token}`; // Assuming backend can read query param if needed. 
-    // Actually, backend auth.middleware usually reads Bearer token.
-    // If backend doesn't support query token, we'd need to fetch a connect URL first, then redirect.
-    // Let's assume the backend auth middleware supports req.query.token or we are just redirecting.
-    // For simplicity, we just redirect.
+    const token = localStorage.getItem('auth_token');
+    window.location.href = `${linkedinApi.connectUrl}?token=${token}`;
   };
 
   return (
@@ -90,9 +82,7 @@ export function LinkedinSettingsPage() {
             <div className="flex items-center justify-between">
               <p className="text-gray-600">Not connected</p>
               <button
-                onClick={() => {
-                  window.location.href = linkedinApi.connectUrl;
-                }}
+                onClick={handleConnect}
                 className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors bg-blue-600 text-white hover:bg-blue-700 h-10 px-4"
               >
                 Connect LinkedIn
