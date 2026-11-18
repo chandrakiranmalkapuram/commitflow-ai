@@ -18,3 +18,5 @@ apps/api/keys/github-private-key.pem
 
 # GitHub App private keys
 *.pem
+
+.turbo/

@@ -3,7 +3,7 @@ import { z } from 'zod';
 // Define the schema for required environment variables
 const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
-  PORT: z.string().regex(/^\d+$/).transform(Number).default('4000'),
+  PORT: z.string().regex(/^\d+$/).transform(Number).default(4000),
   DATABASE_URL: z.string().url(),
   REDIS_URL: z.string().url(),
   JWT_SECRET: z.string().min(32),
