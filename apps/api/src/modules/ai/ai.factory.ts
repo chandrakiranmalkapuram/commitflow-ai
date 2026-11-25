@@ -1,5 +1,5 @@
 import { env } from '../../config/env.js';
-
+import { AiProvider } from './ai.types.js';
 import { GrokProvider } from './providers/grok.provider.js';
 
 export class AiFactory {

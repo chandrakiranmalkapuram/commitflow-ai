@@ -1,5 +1,5 @@
 import { env } from '../../config/env.js';
-
+import { githubAccountRepository } from './github-account.repository.js';
 import { ConnectGithubAccountRequest, GithubAccountDto } from './github-account.types.js';
 import { encrypt } from '../../utils/encryption.util.js';
 

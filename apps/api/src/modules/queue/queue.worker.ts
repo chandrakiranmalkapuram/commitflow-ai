@@ -95,7 +95,7 @@ export class QueueWorker {
         Platform.LinkedIn,
         ToneProfile.Professional
       );
-      await generationRepository.saveGeneratedContent(generation.id, linkedinContent);
+      const savedContent = await generationRepository.saveGeneratedContent(generation.id, linkedinContent);
       console.log('[Worker] LinkedIn Content Saved');
 
       // Generate Image Prompt
@@ -119,7 +119,7 @@ export class QueueWorker {
       });
 
       if (organization) {
-        const publication = await publishingRepository.createPublication(linkedinContent.id, 'LINKEDIN');
+        const publication = await publishingRepository.createPublication(savedContent.id, 'LINKEDIN');
         await queueService.enqueuePublishJob({
           publicationId: publication.id,
           userId: organization.ownerId
