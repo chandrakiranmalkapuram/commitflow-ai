@@ -11,6 +11,11 @@ import { GenerationDetailPage } from './generations/GenerationDetailPage';
 import { GithubSettingsPage } from './github/GithubSettingsPage';
 import { GithubCallbackPage } from './github/GithubCallbackPage';
 import { LinkedinSettingsPage } from './linkedin/LinkedinSettingsPage';
+import { PublicLayout } from './pages/PublicLayout';
+import { HomePage } from './pages/HomePage';
+import { FeaturesPage } from './pages/FeaturesPage';
+import { HowItWorksPage } from './pages/HowItWorksPage';
+import { FaqPage } from './pages/FaqPage';
 
 const queryClient = new QueryClient();
 
@@ -20,12 +25,21 @@ export function App() {
       <AuthProvider>
         <BrowserRouter>
           <Routes>
+            {/* Public marketing website */}
+            <Route element={<PublicLayout />}>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/features" element={<FeaturesPage />} />
+              <Route path="/how-it-works" element={<HowItWorksPage />} />
+              <Route path="/faq" element={<FaqPage />} />
+            </Route>
+
+            {/* Auth routes */}
             <Route path="/login" element={<LoginView />} />
             <Route path="/register" element={<RegisterView />} />
-            
+
+            {/* Protected authenticated application */}
             <Route element={<ProtectedRoute />}>
               <Route element={<AppLayout />}>
-                <Route path="/" element={<Navigate to="/dashboard" replace />} />
                 <Route path="/dashboard" element={<DashboardPage />} />
                 <Route path="/repositories" element={<RepositoryPage />} />
                 <Route path="/generations" element={<div className="p-4">Generations coming soon</div>} />
@@ -37,7 +51,8 @@ export function App() {
                 <Route path="/settings/linkedin" element={<LinkedinSettingsPage />} />
               </Route>
             </Route>
-            
+
+            {/* Catch-all fallback */}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </BrowserRouter>
