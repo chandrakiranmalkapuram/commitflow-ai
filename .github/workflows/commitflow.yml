@@ -1,0 +1,28 @@
+name: CommitFlow AI Trigger
+
+on:
+  workflow_dispatch:
+
+jobs:
+  analyze:
+    name: Send Commit To CommitFlow
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Send Commit Data
+        run: |
+          curl -X POST "${{ secrets.COMMITFLOW_API_URL }}/webhook/github" \
+            -H "Content-Type: application/json" \
+            -H "x-commitflow-secret: ${{ secrets.COMMITFLOW_WEBHOOK_SECRET }}" \
+            -d '{
+              "repository": "${{ github.repository }}",
+              "branch": "${{ github.ref }}",
+              "commit": "${{ github.sha }}",
+              "author": "${{ github.actor }}",
+              "message": "${{ github.event.head_commit.message }}"
+            }'

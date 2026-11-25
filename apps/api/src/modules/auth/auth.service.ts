@@ -1,6 +1,7 @@
 import { env } from '../../config/env.js';
 
 import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
 import { RegisterRequest, LoginRequest, AuthTokens } from './auth.types.js';
 import { userService } from '../user/user.service.js';
 import { organizationService } from '../organization/organization.service.js';
