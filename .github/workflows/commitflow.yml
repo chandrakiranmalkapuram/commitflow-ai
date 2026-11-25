@@ -1,9 +1,7 @@
 name: CommitFlow AI Trigger
 
 on:
-  push:
-    branches:
-      - "**"
+  workflow_dispatch:
 
 jobs:
   analyze:
